@@ -1,0 +1,40 @@
+<div class="form-container">
+  <h1>Fichier d’évaluation de l’appétit</h1>
+
+  <div class="section">
+    <h2>Au petit-déjeuner :</h2>
+    <mat-checkbox name="breakfastNoAppetite" [(ngModel)]=" evaluationData.breakfastNoAppetite">Pas d'appétit du tout</mat-checkbox><br>
+    <mat-checkbox name="breakfastSlightLoss" [(ngModel)]="evaluationData.breakfastSlightLoss">Légère perte d'appétit</mat-checkbox><br>
+    <mat-checkbox name="breakfastModerate" [(ngModel)]="evaluationData.breakfastModerate">Appétit modéré</mat-checkbox><br>
+    <mat-checkbox name="breakfastGood" [(ngModel)]="evaluationData.breakfastGood">Bon appétit</mat-checkbox><br>
+  </div>
+
+  <div class="section">
+    <h2>Au déjeuner :</h2>
+    <mat-checkbox name="lunchNoAppetite" [(ngModel)]="evaluationData.lunchNoAppetite">Pas d'appétit du tout</mat-checkbox><br>
+    <mat-checkbox name="lunchSlightLoss" [(ngModel)]="evaluationData.lunchSlightLoss">Légère perte d'appétit</mat-checkbox><br>
+    <mat-checkbox name="lunchModerate" [(ngModel)]="evaluationData.lunchModerate">Appétit modéré</mat-checkbox><br>
+    <mat-checkbox name="lunchGood" [(ngModel)]="evaluationData.lunchGood">Bon appétit</mat-checkbox><br>
+  </div>
+
+  <div class="section">
+    <h2>Au dîner :</h2>
+    <mat-checkbox name="dinnerNoAppetite" [(ngModel)]="evaluationData.dinnerNoAppetite">Pas d'appétit du tout</mat-checkbox><br>
+    <mat-checkbox name="dinnerSlightLoss" [(ngModel)]="evaluationData.dinnerSlightLoss">Légère perte d'appétit</mat-checkbox><br>
+    <mat-checkbox name="dinnerModerate" [(ngModel)]="evaluationData.dinnerModerate">Appétit modéré</mat-checkbox><br>
+    <mat-checkbox name="dinnerGood" [(ngModel)]="evaluationData.dinnerGood">Bon appétit</mat-checkbox><br>
+  </div>
+
+  <div class="comment-box">
+    <mat-form-field appearance="outline">
+      <mat-label>Commentaire:</mat-label>
+      <textarea matInput name="comment"  [(ngModel)]="evaluationData.comment"></textarea>
+    </mat-form-field>
+  </div>
+
+  <div class="button-group">
+    <button mat-raised-button color="primary" (click)="imprimer()" style="color: darkslateblue; width: 30%;margin-left: 5%;background-color: white;border: 1px solid darkslateblue ">Imprimer</button>
+    <button mat-raised-button color="primary" (click)="enregistrer()" style="color: white; width: 30%;margin-left: 5%">Enregistrer</button>
+  </div>
+</div>
+

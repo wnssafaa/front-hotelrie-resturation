@@ -1,0 +1,10 @@
+<!-- delete.component.html -->
+<mat-dialog-content>
+  <h1 *ngIf="!buildingdelet">Vous voulez vraiment supprimer ce bâtiment ?</h1>
+  <h1 *ngIf="buildingdelet">Bâtiment supprimé avec succès !</h1>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button color="primary" (click)="onConfirm()" *ngIf="!buildingdelet" style="color: white; width: 30%; margin: auto; background-color: #176C9C">Oui</button>
+  <button mat-button (click)="onCancel()" *ngIf="!buildingdelet" style="color: gray; width: 30%; margin: auto; background-color: gainsboro">Non</button>
+  <button mat-button (click)="onCancel()" *ngIf="buildingdelet" style="color: white; width: 30%; margin: auto; background-color: #176C9C">Ok</button>
+</mat-dialog-actions>

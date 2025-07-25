@@ -1,0 +1,13 @@
+
+
+<mat-dialog-content>
+  <h1 mat-dialog-title>Veuillez entrer la raison pour laquelle vous voulez annuler la commande ?</h1>
+  <mat-form-field style="width:90%">
+    <mat-label>Raison de l'annulation</mat-label>
+    <input matInput [(ngModel)]="reason">
+  </mat-form-field>
+  </mat-dialog-content>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="reason" cdkFocusInitial style="color: white; width: 30%;margin:auto;background-color: #176C9C">Confirmer</button>
+  <button mat-button (click)="onCancel()"  style="color: gray; width: 30%;margin:auto;background-color: gainsboro">Annuler</button>
+ </div>

@@ -1,0 +1,21 @@
+<div class="formulaire">
+  <h1 *ngIf="!modificationReussi">{{"ajouter_batiment"| translate}}</h1>
+  <h1 *ngIf="modificationReussi">{{"modifier_batiment"| translate}}</h1>
+
+  <form [formGroup]="buildingForm" (ngSubmit)="onSubmit()" class="container">
+    <mat-form-field appearance="outline">
+      <mat-label>{{"code"| translate}}</mat-label>
+      <input matInput formControlName="code">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{"nom"| translate}}</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+
+    <button mat-raised-button  routerLink='/hotelerie/building-list' style="color: darkslateblue; width: 43%;margin-left: 4%;background-color: white;border: 1px solid darkslateblue ">{{ 'Annuler' | translate }}</button>
+    <button type="submit" mat-raised-button color="primary" [disabled]="!isFormValid()" style=" width: 43%;margin-left: 4%; ">
+      {{modificationReussi ? ('UPDATE'| translate) : 'SAVE' | translate}}
+    </button>
+  </form>
+</div>

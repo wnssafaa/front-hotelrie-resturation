@@ -1,0 +1,207 @@
+type Recipe {
+  id: ID!
+  name: String!
+  Category: String
+  ProductionValue: Float
+  uniteProductionValue: String
+  isCanceled: Boolean!
+  ingredientRecipes: [IngredientRecipe]
+  sousRecipes: [SousRecipe]
+}
+
+type IngredientRecipe {
+  quantity: Float
+  unit: String
+  ingredient: IngredientType
+}
+
+type IngredientType {
+  id: ID!
+  name: String
+}
+
+type SousRecipe {
+  name: String
+  productionValue: Float
+  unitProductionValue: String
+}
+
+type Query {
+  recipeList: [Recipe!]!
+  recipe(pk: ID!): Recipe
+}
+
+type Mutation {
+  recipeMutation: RecipeMutation
+}
+
+type RecipeMutation {
+  save(data: RecipeInput!): Recipe
+  delete(pk: Int!): DeleteResponse
+}
+
+input RecipeInput {
+  id: Int
+  name: String!
+  Category: String
+  ProductionValue: Float
+  uniteProductionValue: String
+  isCanceled: Boolean
+  ingredientRecipes: [IngredientRecipeInput]
+  sousRecipes: [SousRecipePartialInput]
+}
+
+input IngredientRecipePartialInput {
+  quantity: Float
+  unit: String
+  ingredient: ID
+}
+
+input SousRecipePartialInput {
+  name: String
+  productionValue: Float
+  unitProductionValue: String
+}
+
+type DeleteResponse {
+  success: Boolean!
+}
+
+
+query recipeList {
+  recipeList {
+    id
+    name
+    Category
+    ProductionValue
+    uniteProductionValue
+    isCanceled
+    ingredientRecipes {
+      quantity
+      unit
+      ingredient {
+        id
+        name
+      }
+    }
+    sousRecipes {
+      name
+      productionValue
+      unitProductionValue
+    }
+  }
+}
+
+
+query GetRecipeById($id: ID!) {
+  recipe(pk: $id) {
+    id
+    name
+    Category
+    ProductionValue
+    uniteProductionValue
+    isCanceled
+    ingredientRecipes {
+      quantity
+      unit
+      ingredient {
+        id
+        name
+      }
+    }
+    sousRecipes {
+      name
+      productionValue
+      unitProductionValue
+    }
+  }
+}
+
+mutation CreateRecipe($name: String!, $category: String, $productionValue: Float!, $unitProductionValue: String!, $isCanceled: Boolean!, $ingredientRecipes: [IngredientRecipePartialInput!], $sousRecipes: [SousRecipePartialInput!]) {
+  recipeMutation {
+    save(data: {
+      name: $name,
+      Category: $category,
+      ProductionValue: $productionValue,
+      uniteProductionValue: $unitProductionValue,
+      isCanceled: $isCanceled,
+      ingredientRecipes: $ingredientRecipes,
+      sousRecipes: $sousRecipes
+    }) {
+      id
+      name
+      Category
+      ProductionValue
+      uniteProductionValue
+      isCanceled
+      ingredientRecipes {
+        quantity
+        unit
+        ingredient {
+          id
+          name
+        }
+      }
+      sousRecipes {
+        name
+        productionValue
+        unitProductionValue
+      }
+    }
+  }
+}
+
+mutation UpdateRecipe(
+  $id: Int!
+  $name: String!
+  $category: String
+  $productionValue: Float!
+  $unitProductionValue: String
+  $isCanceled: Boolean!
+  $ingredientRecipes: [IngredientRecipePartialInput!]
+  $sousRecipes: [SousRecipePartialInput!]
+) {
+  recipeMutation {
+    save(
+      data: {
+        id: $id
+        name: $name
+        Category: $category
+        ProductionValue: $productionValue
+        uniteProductionValue: $unitProductionValue
+        isCanceled: $isCanceled
+        ingredientRecipes: $ingredientRecipes
+        sousRecipes: $sousRecipes
+      }
+    ) {
+      id
+      name
+      Category
+      ProductionValue
+      uniteProductionValue
+      isCanceled
+      ingredientRecipes {
+        quantity
+        unit
+        ingredient {
+          id
+          name
+        }
+      }
+      sousRecipes {
+        name
+        productionValue
+        unitProductionValue
+      }
+    }
+  }
+}
+
+mutation DeleteRecipe($id: Int!) {
+  recipeMutation {
+    delete(pk: $id) {
+      success
+    }
+  }
+}
+

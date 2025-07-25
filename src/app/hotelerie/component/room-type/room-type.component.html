@@ -1,0 +1,20 @@
+<div class="formulaire">
+
+      <form [formGroup]="roomTypeForm" (ngSubmit)="onSubmit()" class="container">
+        <h1 *ngIf="!modificationReussi">{{ "ajouter_type-chambre" | translate }}</h1>
+        <h1 *ngIf="modificationReussi">{{ "modifier_type-chambre" | translate }}</h1>
+          <mat-form-field appearance="outline">
+            <mat-label>{{ "room_type"| translate }} </mat-label>
+            <input matInput formControlName="type" required>
+            <mat-error *ngIf="roomTypeForm.get('type')?.hasError('required')">
+              Le type de chambre est requis.
+            </mat-error>
+          </mat-form-field>
+
+        <button mat-raised-button  routerLink='/hotelerie/room-type-list' style="color: darkslateblue; width: 43%;margin-left: 4%;background-color: white;border: 1px solid darkslateblue ">{{ 'Annuler' | translate }}</button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="roomTypeForm.invalid " style=" width: 43%;margin-left: 4%; ">
+          {{modificationReussi ? ('UPDATE'| translate) : 'SAVE' | translate}}
+        </button>
+      </form>
+</div>
+

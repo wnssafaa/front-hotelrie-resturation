@@ -1,0 +1,51 @@
+<div class="formulaire" *ngIf="!commande && commandeAjoutee" >
+  <form [formGroup]="commandeForm" (ngSubmit)="onSubmit()" class="container" >
+    <h1 *ngIf="!modificationReussi">{{ 'Ajouter une commande' | translate }}</h1>
+    <h1 *ngIf="modificationReussi">{{ 'Modifier commande' | translate }}</h1>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'Patient' | translate }}</mat-label>
+      <mat-select formControlName="patient" placeholder="{{ 'Sélectionnez un patient' | translate }}">
+        <mat-option *ngFor="let patient of patients" [value]="patient.nom">
+          {{ patient.nom }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field><br>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'Repas' | translate }}</mat-label>
+      <mat-select formControlName="meal" placeholder="{{ 'Sélectionnez un repas' | translate }}" multiple>
+        <mat-option *ngFor="let repas of repasList" [value]="repas.id" >
+          {{ repas.label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <input type="hidden" formControlName="status" value="En attente"><br>
+    <button mat-raised-button  routerLink='/resturation/commande-list' style="color: darkslateblue; width: 43%;margin-left: 4%;background-color: white;border: 1px solid darkslateblue ">{{ 'Annuler' | translate }}</button>
+    <button type="submit" mat-raised-button color="primary" style="color: white; width: 43%;margin-left: 4%" [disabled]="commandeForm.invalid">
+      {{modificationReussi ? ('UPDATE'| translate) : 'Generate' | translate}}
+    </button>
+  </form>
+</div>
+<div *ngIf="commande && commandeAjoutee" class="affichag">
+  <h1 style="color: #176C9C "><b>Commande N°{{ commande.id }} </b></h1>
+  <p> <b style="color: #176C9C ">Nom de Patient:</b> {{ commande.patient }}</p>
+  <p><b style="color: #176C9C ">Repas commande:</b> {{ commande.meal.label }}</p>
+  <p *ngIf="commande.isCanceled==false && !valide"><b style="color: #176C9C ">Status du commande:</b>{{ commande.status}}</p>
+  <p *ngIf="commande.isCanceled==true && !valide "><b style="color: #176C9C ">Status du commande:</b> {{ getStatusInitialValue()}}</p>
+  <p><b style="color: #176C9C ">Date et heure de Commande:</b>{{ commande.date }}</p>
+  <button type="submit" mat-raised-button color="primary" style="color:#176C9C; width: 30%;margin-left: 5%;background-color: white;border: 1px solid #176C9C " *ngIf="valide" (click)="editcommande()">
+    edit
+  </button>
+  <button type="submit" mat-raised-button color="primary" style="color: white; width: 30%;margin-left: 5%;background-color: #176C9C"  *ngIf="valide" (click)="valider()">
+    valider
+  </button>
+  <button mat-raised-button *ngIf="valide" (click)="openEvaluationForm()"  style="color: white; width: 1%;margin-left: 1%;background-color: #176C9C"><mat-icon>description</mat-icon>
+  </button>
+  <button type="submit" mat-raised-button color="primary" style="color: darkslateblue; width: 30%;margin-left: 5%;background-color: white;border: 1px solid darkslateblue "  *ngIf="!valide" [routerLink]="['/resturation/commande']" >
+    retour
+  </button>
+  <button type="submit" mat-raised-button color="primary" style="color: white; width: 30%;margin-left: 5%"  *ngIf="!valide && commande.isCanceled==false " (click)="cancelCommande()"  >
+    annuler
+  </button>
+  <button type="submit" mat-raised-button color="primary" style="color: white; width: 30%;margin-left: 5%"  *ngIf="!valide && commande.isCanceled==true " routerLink='/resturation/commande-list'  >
+   Commandes </button>
+</div>

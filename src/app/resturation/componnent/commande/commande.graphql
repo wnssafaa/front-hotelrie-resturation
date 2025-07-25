@@ -1,0 +1,145 @@
+type Order {
+  id: ID!
+  status: String!
+  patient: String!
+  date: Date!
+  meal: [Meal!]!
+  isCanceled: Boolean!
+}
+type Diet {
+  id: ID!
+  code: String!
+}
+
+type Meal {
+  id: ID!
+  type: String
+  label: String
+  price: Float
+  calorie: Int
+  availability: String!
+  diet: Diet
+  supplement: String!
+  belief: String!
+  isCanceled: Boolean!
+  photo: String
+}
+
+type Query {
+  orderList: [Order!]!
+  order(pk: ID!): Order
+}
+
+type Mutation {
+  orderMutation: OrderMutation
+}
+
+type OrderMutation {
+  save(data: OrderInput!): Order
+  delete(pk: Int!): DeleteResponse
+}
+input MealPartialInput {
+  id: Int
+  label: String
+  type: String
+  label: String
+
+}
+
+input OrderInput {
+  id: Int
+  status: String!
+  meal: [MealPartialInput!]!
+  patient: String!
+  date: String!
+  isCanceled: Boolean!
+}
+
+type DeleteResponse {
+  success: Boolean!
+}
+scalar Date
+
+query orderList {
+  orderList {
+    id
+    status
+    patient
+    date
+    meal {
+      label
+    }
+    isCanceled
+  }
+}
+
+
+query GetOrderById($id: ID!) {
+  order(pk: $id) {
+    id
+    status
+    patient
+    date
+    meal {
+      id
+      label
+    }
+    isCanceled
+  }
+}
+
+mutation CreateOrder($status: String!, $mealIds: [MealPartialInput!]!, $patient: String!, $date: Date!,
+  $isCanceled: Boolean!) {
+  orderMutation {
+    save(data: {
+      status: $status,
+      meal: $mealIds,
+      patient: $patient,
+      date: $date,
+      isCanceled: $isCanceled
+    }) {
+      id
+      status
+      meal {
+        id
+        label
+      }
+      patient
+      date
+
+      isCanceled
+    }
+  }
+}
+
+mutation UpdateOrder($id: Int!, $status: String!, $mealIds: [MealPartialInput!]!, $patient: String!, $date: Date!, $isCanceled: Boolean!) {
+  orderMutation {
+    save(data: {
+      id: $id,
+      status: $status,
+      meal: $mealIds,
+      patient: $patient,
+      date: $date,
+      isCanceled: $isCanceled
+    }) {
+      id
+      status
+      meal {
+        id
+        label
+      }
+      patient
+      date
+      isCanceled
+    }
+  }
+}
+
+
+mutation DeleteOrder($id: Int!) {
+  orderMutation {
+    delete(pk: $id) {
+      success
+    }
+  }
+}

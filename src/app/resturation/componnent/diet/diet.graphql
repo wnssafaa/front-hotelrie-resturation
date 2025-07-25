@@ -1,0 +1,95 @@
+type Diet {
+  id: ID!
+  code: String!
+  description: String!
+  label: String!
+  isCanceled: Boolean
+}
+
+type Query {
+  dietList: [Diet!]!
+  diet(pk: ID!): Diet
+  dietSearchByLabel(label: String!): [Diet]!
+}
+
+type Mutation {
+  saveDiet(data: DietInput!): Diet
+  deleteDiet(pk: Int!): DeleteResponse
+}
+
+input DietInput {
+  id: Int
+  code: String!
+  description: String!
+  label: String!
+  isCanceled: Boolean
+}
+
+type DeleteResponse {
+  success: Boolean!
+}
+
+
+query  dietList{
+            dietList {
+              id
+                code
+                description
+                label
+              isCanceled
+            }
+        }
+
+  query GetDietById($id: ID!) {
+          diet(pk: $id) {
+            id
+            code
+            description
+            label
+            isCanceled
+          }
+        }
+
+mutation CreateDiet($code: String!, $description: String!, $label: String!, $isCanceled: Boolean) {
+  dietMutation {
+    save(data: {
+      code: $code,
+      description: $description,
+      label: $label,
+      isCanceled: $isCanceled
+    }) {
+      id
+      code
+      description
+      label
+      isCanceled
+    }
+  }
+}
+
+mutation UpdateDiet($id: Int!, $code: String!, $description: String!, $label: String!, $isCanceled: Boolean) {
+  dietMutation {
+    save(data: {
+      id: $id,
+      code: $code,
+      description: $description,
+      label: $label,
+      isCanceled: $isCanceled
+    }) {
+      id
+      code
+      description
+      label
+      isCanceled
+    }
+  }
+}
+
+mutation DeleteDiet($id: Int!) {
+  dietMutation {
+    delete(pk: $id) {
+      success
+    }
+  }
+}
+

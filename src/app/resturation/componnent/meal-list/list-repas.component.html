@@ -1,0 +1,61 @@
+
+
+      <div class="container">
+        <span>
+          <mat-form-field appearance="outline" class="search">
+            <mat-label>{{ 'search' | translate }}</mat-label>
+            <input matInput placeholder="{{ 'search' | translate }}" [(ngModel)]="searchTerm" (keyup)="searchByLabel(searchTerm)">
+          </mat-form-field>
+          <button mat-raised-button [routerLink]="['../meal']" style="margin-left: 20%" color="primary">+{{ 'ajouter' | translate }}</button>
+        </span>
+
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8"  *ngIf="dataSource && dataSource.data.length > 0">
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let repas" [ngClass]="{'canceled': repas.isCanceled}" >{{ repas.id }}</td>
+          </ng-container>
+          <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef>Type</th>
+            <td mat-cell *matCellDef="let repas" [ngClass]="{'canceled': repas.isCanceled}">{{ repas.type }}</td>
+          </ng-container>
+          <ng-container matColumnDef="label">
+            <th mat-header-cell *matHeaderCellDef>Libellé</th>
+            <td mat-cell *matCellDef="let repas" [ngClass]="{'canceled': repas.isCanceled}" >{{ repas.label }}</td>
+          </ng-container>
+          <ng-container matColumnDef="prix">
+            <th mat-header-cell *matHeaderCellDef>Prix</th>
+            <td mat-cell *matCellDef="let repas" [ngClass]="{'canceled': repas.isCanceled}" >{{ repas.price }}</td>
+          </ng-container>
+          <ng-container matColumnDef="calorie">
+            <th mat-header-cell *matHeaderCellDef>Calorie</th>
+            <td mat-cell *matCellDef="let repas" [ngClass]="{'canceled': repas.isCanceled}">{{ repas.calorie }}</td>
+          </ng-container>
+          <ng-container matColumnDef="régime">
+            <th mat-header-cell *matHeaderCellDef>Regime</th>
+            <td mat-cell *matCellDef="let repas" [ngClass]="{'canceled': repas.isCanceled}" >{{ repas.diet.code }}</td>
+          </ng-container>
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>action</th>
+            <td mat-cell *matCellDef="let repas">
+              <button mat-icon-button (click)="deleteRepass(repas.id)">
+              <mat-icon  color="warn">delete</mat-icon></button>
+              <button mat-icon-button (click)="editRepas(repas)"><mat-icon  color="primary">edit </mat-icon></button>
+              <button mat-icon-button  (click)="cancelrepas(repas)">
+              <mat-icon>cancel </mat-icon></button>
+
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <div *ngIf="!dataSource || dataSource.data.length === 0">
+          Aucune repas  disponible.
+        </div>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+
+
+
+
+
+

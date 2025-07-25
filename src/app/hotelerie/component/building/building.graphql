@@ -1,0 +1,81 @@
+type Building {
+  id: ID!
+  code: String!
+  name: String!
+}
+
+type Query {
+  buildingList: [Building!]!
+  building(pk: ID!): Building
+}
+
+type Mutation {
+  buildingMutation: BuildingMutation
+}
+
+type BuildingMutation {
+  save(data: BuildingInput!): Building
+  delete(pk: Int!): DeleteResponse
+}
+
+input BuildingInput {
+  id: Int
+  code: String!
+  name: String!
+}
+
+type DeleteResponse {
+  success: Boolean!
+}
+
+query buildingList {
+    buildingList {
+      id
+      code
+      name
+    }
+  }
+
+  query GetBuildingById($id: ID!) {
+          building(pk: $id) {
+            id
+            code
+            name
+          }
+        }
+
+   mutation CreateBuilding($code: String!, $name: String!) {
+            buildingMutation {
+                save(data: {
+                    code: $code,
+                    name: $name
+                }) {
+                    id
+                    code
+                    name
+                }
+            }
+        }
+
+  mutation UpdateBuilding($id: Int!, $code: String!, $name: String!) {
+            buildingMutation {
+                save(data: {
+                    id: $id,
+                    code: $code,
+                    name: $name
+                }) {
+                    id
+                    code
+                    name
+                }
+            }
+        }
+
+  mutation DeleteBuilding($id: Int!) {
+            buildingMutation {
+                delete(pk: $id) {
+                    success
+                }
+            }
+        }
+

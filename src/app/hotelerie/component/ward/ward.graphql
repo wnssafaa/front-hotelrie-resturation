@@ -1,0 +1,100 @@
+type Ward {
+  id: ID!
+  code: String!
+  name: String!
+  isPrivate: Boolean!
+  description: String
+}
+
+type Query {
+  wardList: [Ward!]!
+  ward(pk: ID!): Ward
+}
+
+type Mutation {
+  wardMutation: WardMutation
+}
+
+type WardMutation {
+  save(data: WardInput!): Ward
+  erase(pk: Int!): DeleteResponse
+}
+
+input WardInput {
+  id: Int
+  code: String!
+  name: String!
+  isPrivate: Boolean!
+  description: String
+}
+
+type DeleteResponse {
+  success: Boolean!
+  error: String
+}
+
+query wardList {
+             wardList {
+                 id
+                 code
+                 name
+                 isPrivate
+                 description
+             }
+         }
+
+  query GetWardById($id: ID!) {
+          ward(pk: $id) {
+            id
+            code
+            name
+            isPrivate
+            description
+          }
+        }
+
+ mutation CreateWard($name: String!, $code: String!, $isPrivate: Boolean!, $description: String!) {
+            wardMutation {
+                save(data: {
+                    name: $name,
+                    code: $code,
+                    isPrivate: $isPrivate,
+                    description: $description
+                }) {
+                    id
+                    name
+                    code
+                    isPrivate
+                    description
+                }
+            }
+        }
+
+  mutation UpdateWard($id: Int!, $name: String!, $code: String!, $isPrivate: Boolean, $description: String!) {
+            wardMutation {
+                save(data: {
+                    id: $id,
+                    name: $name,
+                    code: $code,
+                    isPrivate: $isPrivate,
+                    description: $description
+                }) {
+                    id
+                    name
+                    code
+                    isPrivate
+                    description
+                }
+            }
+        }
+
+   mutation DeleteWard($pk: Int!) {
+            wardMutation {
+                erase(pk: $pk) {
+                    success
+                    error
+                }
+            }
+        }
+
+

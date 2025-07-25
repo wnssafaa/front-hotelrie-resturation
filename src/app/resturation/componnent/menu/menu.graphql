@@ -1,0 +1,101 @@
+type Meal {
+  id: ID!
+  type: String!
+  label: String!
+}
+type Menu {
+  id: ID!
+  title: String!
+  meal: [Meal!]
+  isCanceled: Boolean
+}
+type Query {
+  menuList: [Menu!]!
+  menu(pk: ID!): Menu
+}
+type Mutation {
+  menuMutation: MenuMutation
+}
+type MenuMutation {
+  save(data: MenuInput!): Menu
+  delete(pk: Int!): DeleteResponse
+}
+input MenuInput {
+  id: Int
+  title: String!
+  meal: [MealPartialInput!]!
+  isCanceled: Boolean
+}
+input MealPartialInput {
+  id: ID!
+  type: String
+  label: String
+}
+
+type DeleteResponse {
+  success: Boolean!
+}
+
+
+query menuList {
+  menuList {
+    id
+    title
+    meal {
+      id
+      type
+    }
+    isCanceled
+  }
+}
+
+query GetMenuById($id: ID!) {
+  menu(pk: $id) {
+    id
+    title
+    meal {
+      id
+      type
+    }
+  }
+}
+
+
+
+
+mutation CreateMenu($title: String!, $mealIds: [MealPartialInput!]!, $isCanceled: Boolean!) {
+  menuMutation {
+    save(data: { title: $title, meal: $mealIds, isCanceled: $isCanceled }) {
+      id
+      title
+      meal {
+        id
+        type
+      }
+      isCanceled
+    }
+  }
+}
+
+mutation DeleteMenu($id: Int!) {
+  menuMutation {
+    delete(pk: $id) {
+      success
+    }
+  }
+}
+
+mutation UpdateMenu($id: Int!, $title: String!, $mealIds: [MealPartialInput!]!, $isCanceled: Boolean) {
+  menuMutation {
+    save(data: { id: $id, title: $title, meal: $mealIds, isCanceled: $isCanceled }) {
+      id
+      title
+      meal {
+        type
+      }
+      isCanceled
+    }
+  }
+}
+
+

@@ -1,0 +1,78 @@
+<div class="formulaire">
+<form [formGroup]="roomForm" (ngSubmit)="onSubmit()" class="container">
+  <h1 *ngIf="!modificationReussi">{{ "ajouter-chambre" | translate }}</h1>
+  <h1 *ngIf="modificationReussi">{{ "modifier-chambre" | translate }}</h1>
+
+  <mat-form-field appearance="outline">
+    <mat-label>{{ "code" | translate }}</mat-label>
+    <input matInput formControlName="code" >
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>{{ "LABEL" | translate }}</mat-label>
+    <input matInput formControlName="label" >
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>{{ "etage" | translate }}</mat-label>
+    <mat-select formControlName="floor">
+      <mat-option *ngFor="let floor of etages" [value]="floor.id">{{ floor.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>{{ "pavillon" | translate }}</mat-label>
+    <mat-select formControlName="ward" >
+      <mat-option *ngFor="let ward of pavillons" [value]="ward.id">{{ ward.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>{{ "room_type" | translate }}</mat-label>
+    <mat-select formControlName="roomType">
+      <mat-option *ngFor="let roomType of roomTypes" [value]="roomType.id">{{ roomType.type }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Options</mat-label>
+      <mat-select formControlName="options" multiple>
+        <mat-option *ngFor="let option of chambreOptions" [value]="option">{{ option }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>{{ "status-chambre" | translate }}</mat-label>
+    <mat-select formControlName="status">
+      <mat-option value="Occupée">Occupée</mat-option>
+      <mat-option value="Disponible">Disponible</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>{{ "N°lit" | translate }}</mat-label>
+    <input matInput formControlName="bedCpt" type="number">
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>{{ "Code Lit " | translate }}</mat-label>
+    <input matInput formControlName="bedCode" >
+  </mat-form-field>
+  <mat-form-field appearance="outline" >
+    <mat-label>{{ "Nom Lit " | translate }}</mat-label>
+    <input matInput formControlName="bedName" >
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>{{ "bed type" | translate }}</mat-label>
+    <mat-select formControlName="bedType" >
+      <mat-option *ngFor="let lit of bedTypes" [value]="lit.id">{{ lit.label}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline" >
+    <mat-label>{{ "Status Lit" | translate }}</mat-label>
+    <mat-select formControlName="bedStatus">
+      <mat-option value="Occupée">Occupée</mat-option>
+      <mat-option value="Disponible">Disponible</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button  routerLink='/hotelerie/room-list' style="color: darkslateblue; width: 43%;margin-left: 2%;background-color: white;border: 1px solid darkslateblue ">{{ 'Annuler' | translate }}</button>
+  <button type="submit" mat-raised-button color="primary" [disabled]="roomForm.invalid " style=" width: 43%;margin-left: 2%; ">
+    {{modificationReussi ? ('UPDATE'| translate) : 'SAVE' | translate}}
+  </button>
+</form>
+</div>

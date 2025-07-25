@@ -1,0 +1,44 @@
+<h1 *ngIf="!modificationReussi">{{ 'add menu' | translate }}</h1>
+      <h1 *ngIf="modificationReussi">{{ 'update menu' | translate }}</h1>
+      <div class="formulaire">
+      <form [formGroup]="menuForm" (ngSubmit)="addMenu()">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'title' | translate }}</mat-label>
+          <input matInput formControlName="title">
+        </mat-form-field><br>
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'MEAL' | translate }}</mat-label>
+          <mat-select formControlName="meal" placeholder="{{ 'MEAL' | translate }}" multiple>
+            <mat-option *ngFor="let meal of meals" [value]="meal.id" >{{ meal.type }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br>
+        <button mat-raised-button type="submit" color="warn" style=" color: white; width: 15%; margin-left: 7% " [routerLink]="['/resturation/menu-list']">
+       {{'cancel'|translate }}
+        </button>
+        <button type="submit" mat-raised-button color="primary" style="color: white; width: 15%;margin-left: 5%" [disabled]="!isFormValid()">
+          {{modificationReussi ? ('UPDATE'| translate) : 'SAVE' | translate}}
+        </button>
+      </form>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

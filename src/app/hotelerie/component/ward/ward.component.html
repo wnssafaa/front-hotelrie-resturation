@@ -1,0 +1,29 @@
+<div class="formulaire">
+  <form [formGroup]="wardForm" (ngSubmit)="onSubmit()" class="container">
+    <h1 *ngIf="!modificationReussi">{{ "ajouter_ward" | translate }}</h1>
+    <h1 *ngIf="modificationReussi">{{ "modifier_ward" | translate }}</h1>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ "nom" | translate }}</mat-label>
+      <input matInput formControlName="name" >
+     <!-- <mat-error *ngIf="wardForm.get('nom')?.hasError('NameExists')">nom de chambre existe déjà.</mat-error>-->
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ "code" | translate }}</mat-label>
+      <input matInput formControlName="code" >
+      <mat-error *ngIf="wardForm.get('code')?.hasError('codeExists')">code de chambre existe déjà.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" ></textarea>
+    </mat-form-field><br>
+
+    <mat-checkbox formControlName="isPrivate">{{ 'prive'| translate}}</mat-checkbox><br>
+
+    <button mat-raised-button  routerLink='/hotelerie/ward-list' style="color: darkslateblue; width: 43%;margin-left: 4%;background-color: white;border: 1px solid darkslateblue ">{{ 'Annuler' | translate }}</button>
+    <button type="submit" mat-raised-button color="primary" [disabled]="wardForm.invalid " style=" width: 43%;margin-left: 4%; ">
+      {{modificationReussi ? ('UPDATE'| translate) : 'SAVE' | translate}}
+    </button>
+  </form>
+</div>

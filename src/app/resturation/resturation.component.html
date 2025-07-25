@@ -1,0 +1,119 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+</mat-toolbar>
+<div style="display: flex;">
+  <mat-nav-list>
+    <b><a mat-list-item>
+      <mat-icon  style="font-weight: bold;font-size: 20PX">restaurant</mat-icon>
+    </a></b>
+    <mat-list-item routerLink="/resturation/meal-list">
+      <mat-icon>restaurant_menu</mat-icon>
+    </mat-list-item>
+    <mat-list-item routerLink="/resturation/menu-list">
+      <mat-icon>menu_book</mat-icon>
+    </mat-list-item>
+    <mat-list-item routerLink="/resturation/recipe-list">
+      <mat-icon>receipt</mat-icon>
+    </mat-list-item>
+    <mat-list-item routerLink="/resturation/ingredient-list">
+      <mat-icon>shopping_basket</mat-icon>
+    </mat-list-item>
+    <mat-list-item routerLink="/resturation/diet-list">
+      <mat-icon>local_dining</mat-icon>
+    </mat-list-item>
+    <mat-list-item routerLink="/resturation/commande-list">
+      <mat-icon>room_service</mat-icon>
+    </mat-list-item>
+      <mat-icon matBadge="{{ newNotificationsCount }}" matBadgeColor="accent" style="width:5%;height:5% ;margin-left: 30% ;margin-top: 10%" routerLink="notification">notifications</mat-icon>
+    <mat-list-item>
+      <mat-icon style="font-weight: bold;font-size: 20PX"> hotel</mat-icon>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon>location_city</mat-icon>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon  style="font-weight: bold;font-size: 20PX">domain</mat-icon>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon  style="font-weight: bold;font-size: 20PX">domain</mat-icon>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon  style="font-weight: bold;font-size: 20PX">domain</mat-icon>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon  style="font-weight: bold;font-size: 20PX">hotel</mat-icon>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon  style="font-weight: bold;font-size: 20PX">hotel</mat-icon>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon>language</mat-icon>
+    </mat-list-item>
+  </mat-nav-list>
+  <mat-sidenav-container class="sidenav-container" STYLE="width: 100%; height: 100vh" >
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+    <mat-sidenav #sidenav mode="side" >
+      <mat-nav-list>
+        <a mat-list-item>
+          <span style="font-weight: bold;font-size: 20PX">Restaurant</span>
+        </a>
+        <a mat-list-item routerLink="/resturation/meal-list">
+          <span>{{"Repas"| translate}}</span>
+        </a>
+        <a mat-list-item routerLink="/resturation/menu-list">
+          <span>{{"Menu"| translate}}</span>
+        </a>
+        <a mat-list-item routerLink="/resturation/recipe-list">
+          <span>{{"Recipe"| translate}}</span>
+        </a>
+        <a mat-list-item routerLink="/resturation/ingredient-list">
+          <span>{{"Ingredient"| translate}}</span>
+        </a>
+        <a mat-list-item routerLink="/resturation/diet-list">
+          <span>{{"diet"| translate}}</span>
+        </a>
+        <a mat-list-item routerLink="/resturation/commande-list">
+          {{"commande"| translate}}
+        </a>
+        <a mat-list-item routerLink="/resturation/notification">
+          {{"Notifications"| translate}}
+        </a>
+        <a mat-list-item>
+          <span style="font-weight: bold;font-size: 20PX"> {{"Hotel"| translate}}</span>
+        </a>
+        <a mat-list-item routerLink="/hotelerie/building-list">
+          <span>{{"batiment"| translate}}</span>
+        </a>
+        <a mat-list-item routerLink="/hotelerie/floor-list">
+          <span>{{"etage"| translate}}</span>
+        </a>
+        <a mat-list-item routerLink="/hotelerie/bed-list">
+          <span>{{"type_lit"| translate}}</span>
+        </a>
+        <a mat-list-item routerLink="/hotelerie/ward-list">
+          <span>{{"pavillon"| translate}}</span>
+        </a>
+        <a mat-list-item routerLink="/hotelerie/room-type-list">
+          <span>{{"room_type"| translate}}</span>
+        </a>
+        <a mat-list-item routerLink="/hotelerie/room-list">
+          <span> {{"room"| translate}}</span>
+        </a>
+        <a  mat-list-item  (click)="toggleLanguage()">
+          {{ currentLanguage === 'en' ? 'English' : 'Français' }}
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+  </mat-sidenav-container>
+</div>
+
+
+
+
+
+
+

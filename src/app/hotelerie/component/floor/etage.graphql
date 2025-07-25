@@ -1,0 +1,114 @@
+type Floor {
+  id: ID!
+  name: String!
+  code: String!
+  description: String
+  building: Building!
+}
+type Building {
+  id: ID!
+  code: String!
+  name: String!
+}
+type Query {
+  floorList: [Floor!]!
+  floor(pk: ID!): Floor
+}
+
+type Mutation {
+  floorMutation: FloorMutation
+}
+
+type FloorMutation {
+  save(data: FloorInput!): Floor
+  delete(pk: Int!): DeleteResponse
+}
+
+input FloorInput {
+  id: Int
+  name: String!
+  code: String!
+  building: BuildingPartialInput!
+  description: String
+}
+
+input BuildingPartialInput {
+  id: Int!
+}
+
+type DeleteResponse {
+  success: Boolean!
+}
+
+query GetFloors {
+             floorList {
+                 id
+                 name
+                 code
+                 building {
+                     id
+                 }
+             }
+         }
+
+  query GetFloorById($id: ID!) {
+          floor(pk: $id) {
+            id
+            name
+            code
+            description
+            building {
+              id
+              name
+            }
+          }
+        }
+
+  mutation CreateFloor($name: String!, $code: String!, $buildingId: BuildingPartialInput!, $description: String!) {
+            floorMutation {
+                save(data: {
+                    name: $name,
+                    code: $code,
+                    building: $buildingId,
+                    description: $description
+                }) {
+                    id
+                    name
+                    code
+                    building {
+                        id
+                        name
+                    }
+                    description
+                }
+            }
+        }
+
+  mutation UpdateFloor($id: Int!, $name: String!, $code: String!, $description: String!, $building: BuildingPartialInput!) {
+            floorMutation {
+                save(data: {
+                    id: $id,
+                    name: $name,
+                    code: $code,
+                    description: $description,
+                    building: $building
+                }) {
+                    id
+                    name
+                    code
+                    description
+                    building {
+                        id
+                        code
+                        name
+                    }
+                }
+            }
+        }
+
+ mutation DeleteFloor($id: Int!) {
+            floorMutation {
+                delete(pk: $id) {
+                    success
+                }
+            }}

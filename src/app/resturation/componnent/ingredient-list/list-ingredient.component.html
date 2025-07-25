@@ -1,0 +1,60 @@
+
+      <div class="table">
+      <span>
+      <mat-form-field appearance="outline" class="search">
+         <mat-label>{{ 'search' | translate }}</mat-label>
+        <input matInput placeholder="{{ 'search' | translate }}" [(ngModel)]="searchTerm" (keyup)="searchBynom(searchTerm)">
+      </mat-form-field>
+         <button mat-raised-button [routerLink]="['/resturation/ingredient']" color="primary" style="margin-left: 20%">+{{ 'ajouter' | translate }}</button>
+      </span>
+        <table mat-table [dataSource]="dataSource"  class="mat-elevation-z8" *ngIf="dataSource && dataSource.data.length > 0" >
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+            <mat-cell *matCellDef="let ingredient" >{{ ingredient.id }}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="nom">
+            <mat-header-cell *matHeaderCellDef>{{ 'recette.formulaire.label.nom' | translate }}</mat-header-cell>
+            <mat-cell *matCellDef="let ingredient" [ngClass]="{'canceled': ingredient.isCanceled}">
+              {{ ingredient.name }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="unitprice">
+            <mat-header-cell *matHeaderCellDef>{{ 'ingredient.form.placeholder.defaultUnit' | translate }}</mat-header-cell>
+            <mat-cell *matCellDef="let ingredient" [ngClass]="{'canceled': ingredient.isCanceled}">
+              {{ ingredient.unitPrice }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="prix">
+            <mat-header-cell *matHeaderCellDef>{{ 'ingredient.form.placeholder.unitPrice' | translate }}(DH)</mat-header-cell>
+            <mat-cell *matCellDef="let ingredient" [ngClass]="{'canceled': ingredient.isCanceled}">
+              {{ ingredient.price }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="fournisseur">
+            <mat-header-cell *matHeaderCellDef>{{'ingredient.form.label.supplier'|translate }}</mat-header-cell>
+            <mat-cell *matCellDef="let ingredient" [ngClass]="{'canceled': ingredient.isCanceled}">
+              {{ ingredient.supplier }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef>action</mat-header-cell>
+            <mat-cell *matCellDef="let ingredient; ">
+              <button mat-icon-button  color="warn" (click)="deleteIngredient(ingredient)">
+                <mat-icon>delete</mat-icon></button>
+              <button mat-icon-button  color="primary" (click)="editIngredient(ingredient)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button (click)="cancelIngredient(ingredient)">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </table>
+        <div *ngIf="!dataSource || dataSource.data.length === 0">
+          Aucune ingredient  disponible.
+        </div>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+      </div>

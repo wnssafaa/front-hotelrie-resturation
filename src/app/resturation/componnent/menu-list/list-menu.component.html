@@ -1,0 +1,38 @@
+<div class="table">
+      <div>
+        <mat-form-field appearance="outline" class="search">
+          <input matInput placeholder="Rechercher menu" [(ngModel)]="searchTerm" (keyup)="searchByTitre()">
+        </mat-form-field>
+        <button mat-raised-button [routerLink]="['/resturation/menu']" color="primary" style="margin-left: 21%">+{{ 'ajouter' | translate }}</button>
+      </div>
+      <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+          <mat-cell *matCellDef="let menu" [ngClass]="{'canceled': menu.isCanceled}"> {{ menu.id}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="titre">
+          <mat-header-cell *matHeaderCellDef> {{ 'title' | translate }}</mat-header-cell>
+          <mat-cell *matCellDef="let menu" [ngClass]="{'canceled': menu.isCanceled}"> {{ menu.title }} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="repas">
+          <mat-header-cell *matHeaderCellDef>{{ 'MEAL' | translate }}</mat-header-cell>
+          <mat-cell *matCellDef="let menu" [ngClass]="{'canceled': menu.isCanceled}"> {{ menu.meal }} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+          <mat-cell *matCellDef="let menu">
+            <button mat-icon-button color="warn" (click)="deleteMenu(menu.id)"><mat-icon >delete</mat-icon> </button>
+            <button mat-icon-button color="primary" (click)="editmenu(menu)"><mat-icon >edit</mat-icon> </button>
+            <button mat-icon-button (click)="cancelmenus(menu)" ><mat-icon>cancel</mat-icon> </button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+
+      <div *ngIf="!dataSource?.data || dataSource.data.length === 0">
+        <p>Aucun menu trouvé.</p>
+      </div>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+</div>
+

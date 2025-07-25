@@ -1,0 +1,37 @@
+<div STYLE="margin-left: 5%;margin-top: 2% ;margin-right: 5%">
+<h1 style="margin-right: 90%">Notifications</h1>
+<hr>
+  <mat-tab-group>
+    <mat-tab label=" Nouvelles notifications">  <div *ngIf="newNotifications.length > 0">
+      <ul *ngIf="valide">
+        <li *ngFor="let notification of newNotifications">
+          <p><strong>Le patient</strong> {{ notification.patient }} <strong>a commandé un plateau de</strong> {{ notification.repas }}</p>
+        </li>
+        <button type="submit" mat-raised-button color="primary" style="color: white; width: 8%;"  *ngIf="valide"  (click)="valider()" >
+          plateau prêt
+        </button>
+      </ul>
+      <ul *ngIf="!valide">
+        <li *ngFor="let notification of newNotifications">
+          <p ><strong>La commande qui contient  {{ notification.repas }} est  prêt</strong></p>
+        </li>
+      </ul>
+    </div>
+      <div *ngIf="newNotifications.length === 0">
+        <p>Aucune nouvelle notification</p>
+      </div></mat-tab>
+    <mat-tab label="Toutes les notifications">  <p *ngIf="allNotifications.length > 0">
+
+      <ul><div>
+        <li *ngFor="let notification of allNotifications">
+          <p ><strong>Le patient {{ notification.patient }}a commandé un plateau de {{ notification.repas }}</strong></p>
+          <p style=" color: darkgrey">{{ notification.date }}</p>
+        </li>
+      </div>
+      </ul>
+      <div *ngIf="allNotifications.length === 0">
+        <p>Aucune notification disponible</p>
+      </div> </mat-tab>
+  </mat-tab-group>
+
+</div>

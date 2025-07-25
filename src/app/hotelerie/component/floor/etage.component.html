@@ -1,0 +1,34 @@
+<div class="formulaire">
+  <form [formGroup]="etageForm" (ngSubmit)="onSubmit()" class="container">
+    <h1 *ngIf="!modificationReussi">{{ "ajouter_etage" | translate }}</h1>
+    <h1 *ngIf="modificationReussi">{{ "modifier_floor" | translate }}</h1>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ "nom" | translate }}</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ "code" | translate }}</mat-label>
+      <input matInput formControlName="code">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ "batiment" | translate }}</mat-label>
+      <mat-select formControlName="building">
+        <mat-option *ngFor="let building of batiments" [value]="building.id">
+          {{ building.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-error *ngIf="codeOrNameExists">Le bâtiment contient déjà un étage avec ce nom</mat-error>
+    <br>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ "description" | translate }}</mat-label>
+      <input matInput formControlName="description">
+    </mat-form-field>
+    <button mat-raised-button routerLink='/hotelerie/floor-list' style="color: darkslateblue; width: 43%; margin-left: 4%; background-color: white; border: 1px solid darkslateblue">
+      {{ 'Annuler' | translate }}
+    </button>
+    <button type="submit" mat-raised-button color="primary" [disabled]="!isFormValid()" style="width: 43%; margin-left: 4%;">
+      {{ modificationReussi ? ('UPDATE' | translate) : 'SAVE' | translate }}
+    </button>
+  </form>
+</div>

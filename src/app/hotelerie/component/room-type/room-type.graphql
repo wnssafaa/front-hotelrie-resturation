@@ -1,0 +1,72 @@
+type RoomType {
+  id: ID!
+  type: String!
+}
+
+type Query {
+  roomTypeList: [RoomType!]!
+  roomType(pk: ID!): RoomType
+}
+
+type Mutation {
+  roomTypeMutation: RoomTypeMutation
+}
+
+type RoomTypeMutation {
+  save(data: RoomTypeInput!): RoomType
+  delete(pk: Int!): DeleteResponse
+}
+
+input RoomTypeInput {
+  id: Int
+  type: String!
+}
+
+type DeleteResponse {
+  success: Boolean!
+}
+
+query roomTypeList {
+    roomTypeList {
+                id
+                type
+            }
+        }
+
+  query GetRoomTypeById($id: ID!) {
+          roomType(pk: $id) {
+            id
+            type
+          }
+        }
+
+  mutation CreateRoomType($type: String!) {
+            roomTypeMutation {
+                save(data: {
+                    type: $type
+                }) {
+                    id
+                    type
+                }
+            }
+        }
+
+ mutation UpdateRoomType($id: Int!, $type: String!) {
+            roomTypeMutation {
+                save(data: {
+                    id: $id,
+                    type: $type
+                }) {
+                    id
+                    type
+                }
+            }
+        }
+
+    mutation DeleteRoomType($id: Int!) {
+            roomTypeMutation {
+                delete(pk: $id) {
+                    success
+                }
+            }
+        }

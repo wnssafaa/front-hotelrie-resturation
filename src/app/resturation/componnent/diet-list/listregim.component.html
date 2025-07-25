@@ -1,0 +1,58 @@
+
+      <div class="table">
+<span>
+  <mat-form-field appearance="outline" class="search">
+    <mat-label>{{ 'search' | translate }}</mat-label>
+    <input matInput placeholder="{{ 'search' | translate }}" [(ngModel)]="searchTerm" (keyup)=" searchByCode(searchTerm)">
+  </mat-form-field>
+  <button mat-raised-button [routerLink]="['/resturation/diet']" color="primary" style="margin-left: 20%">+{{ 'ajouter' | translate }}</button>
+</span>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <td mat-cell *matCellDef="let regime" [ngClass]="{'canceled': regime.isCanceled}"> {{ regime.id}} </td>
+          </ng-container>
+          <ng-container matColumnDef="code">
+            <th mat-header-cell *matHeaderCellDef>{{ 'code' | translate }} </th>
+            <td mat-cell *matCellDef="let regime" [ngClass]="{'canceled':  regime.isCanceled}"> {{ regime.code }} </td>
+          </ng-container>
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>{{ 'description' | translate }}</th>
+            <td mat-cell *matCellDef="let regime" [ngClass]="{'canceled':  regime.isCanceled}" > {{ regime.description }} </td>
+          </ng-container>
+          <ng-container matColumnDef="label">
+            <th mat-header-cell *matHeaderCellDef> {{ 'label' | translate }} </th>
+            <td mat-cell *matCellDef="let regime" [ngClass]="{'canceled':  regime.isCanceled}" > {{ regime.label }} </td>
+          </ng-container>
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let regime" >
+              <button mat-icon-button color="warn" (click)="deleteRegime(regime.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <button mat-icon-button color="primary" (click)="editregime(regime)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button  (click)="cancelregime(regime)">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <div *ngIf="!dataSource || dataSource.data.length === 0">
+          Aucune regime  disponible.
+        </div>
+        <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+
+      </div>
+
+
+
+
+
+
+
+
+

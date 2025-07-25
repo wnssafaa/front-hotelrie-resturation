@@ -1,0 +1,77 @@
+type BedType {
+  id: ID!
+  label: String!
+}
+
+type Query {
+  bedTypeList: [BedType!]!
+  bedType(pk: ID!): BedType
+}
+
+type Mutation {
+  bedTypeMutation: BedTypeMutation
+}
+
+type BedTypeMutation {
+  save(data: BedTypeInput!): BedType
+  delete(pk: Int!): DeleteResponse
+}
+
+input BedTypeInput {
+  id: Int
+  label: String!
+}
+
+type DeleteResponse {
+  success: Boolean!
+}
+
+query bedTypeList {
+    bedTypeList {
+      id
+      label
+    }
+  }
+
+  query GetBedTypeById($id: ID!) {
+          bedType(pk: $id) {
+            id
+            label
+          }
+        }
+
+  mutation CreateBedType($label: String!) {
+            bedTypeMutation {
+                save(data: {
+                    label: $label
+                }) {
+                    id
+                    label
+                }
+            }
+        }
+
+   mutation UpdateBedType($id: Int!, $label: String!) {
+            bedTypeMutation {
+                save(data: {
+                    id: $id,
+                    label: $label
+                }) {
+                    id
+                    label
+                }
+            }
+        }
+
+   mutation DeleteBedType($id: Int!) {
+            bedTypeMutation {
+                delete(pk: $id) {
+                    success
+                }
+            }
+        }
+
+
+
+
+

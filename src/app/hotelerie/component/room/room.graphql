@@ -1,0 +1,267 @@
+type Room {
+  id: ID!
+  label: String!
+  code: String!
+  floor: Floor!
+  ward: Ward!
+  roomType: RoomType!
+  bedType: BedType!
+  bedCpt: Int!
+  status: String!
+  bedCode: String!
+  bedStatus: String!
+  bedName: String!
+  options: JSON
+}
+type Ward {
+  id: ID!
+  code: String!
+  name: String!
+  isPrivate: Boolean!
+  description: String
+}
+type BedType {
+  id: ID!
+  label: String!
+}
+type Building {
+  id: ID!
+  code: String!
+  name: String!
+}
+type Floor {
+  id: ID!
+  name: String!
+  code: String!
+  description: String
+  building: Building!
+}
+type Diet {
+  id: ID!
+  code: String!
+  description: String!
+  label: String!
+  isCanceled: Boolean!
+}
+
+type Query {
+  roomList: [Room!]!
+  room(pk: ID!): Room
+}
+
+type Mutation {
+  roomMutation: RoomMutation
+}
+
+type RoomMutation {
+  save(data: RoomInput!): Room
+  delete(pk: Int!): DeleteResponse
+}
+type RoomType {
+  id: ID!
+  type: String!
+}
+input RoomInput {
+  id: Int
+  label: String!
+  code: String!
+  floor: FloorPartialInput!
+  ward: WardPartialInput!
+  roomType: RoomTypePartialInput!
+  bedType: BedTypePartialInput!
+  bedCpt: Int!
+  status: String!
+  bedCode: String!
+  bedStatus: String!
+  bedName: String!
+  options: JSON
+}
+
+input FloorPartialInput {
+  id: Int!
+}
+
+input WardPartialInput {
+  id: Int!
+}
+
+input RoomTypePartialInput {
+  id: Int!
+}
+
+input BedTypePartialInput {
+  id: ID!
+  label: String
+}
+
+type DeleteResponse {
+  success: Boolean!
+}
+
+query roomList {
+            roomList {
+                id
+                label
+                code
+              floor {
+
+                name
+              }
+              ward {
+
+                name
+              }
+              roomType {
+
+                type
+              }
+              bedType {
+
+                label
+              }
+                bedCpt
+                status
+                bedCode
+                bedStatus
+                bedName
+              options
+            }
+        }
+
+  query GetRoomById($id: ID!) {
+          room(pk: $id) {
+            id
+            label
+            code
+            floor {
+id
+              name
+            }
+            ward {
+id
+              name
+            }
+            roomType {
+id
+              type
+            }
+            bedType {
+id
+              label
+            }
+            bedCpt
+            status
+            bedCode
+            bedStatus
+            bedName
+            options
+
+          }
+        }
+
+mutation CreateRoom(
+  $label: String!,
+  $code: String!,
+  $floorId: FloorPartialInput!,
+  $wardId: WardPartialInput!,
+  $roomTypeId: RoomTypePartialInput!,
+  $bedCpt: Int!,
+  $status: String!,
+  $bedCode: String!,
+  $bedType: BedTypePartialInput!,
+  $bedName: String!,
+  $options: JSON
+
+) {
+  roomMutation {
+    save(data: {
+      label: $label,
+      code: $code,
+      floor: $floorId,
+      ward: $wardId,
+      roomType: $roomTypeId,
+      bedCpt: $bedCpt,
+      status: $status,
+      bedCode: $bedCode,
+      bedType: $bedType,
+      bedName: $bedName,
+      options: $options,
+
+
+
+    }) {
+      id
+      label
+      code
+      floor {
+        id
+        name
+      }
+      ward {
+        id
+        name
+      }
+      roomType {
+        id
+        type
+      }
+      bedCpt
+      status
+      bedCode
+      bedType {
+        id
+        label
+      }
+
+      bedName
+      options
+    }
+  }
+}
+
+scalar JSON
+
+
+mutation UpdateRoom($id: Int!,$label: String!, $code: String!, $floorId: FloorPartialInput!, $wardId: WardPartialInput!, $roomTypeId: RoomTypePartialInput!, $bedType: BedTypePartialInput!,$bedCpt:Int!,$bedCode: String!, $bedName: String!,$bedStatus:String,$status:String!,$options: JSON) {
+            roomMutation {
+                save(data: {id: $id,label: $label,code: $code,floor: $floorId,ward: $wardId,roomType: $roomTypeId,bedType: $bedType, bedCpt:$bedCpt,bedCode: $bedCode, bedName: $bedName,bedStatus:$bedStatus,status:$status, options: $options,
+                }) {
+                  id
+                  label
+                  code
+                  floor {
+                    id
+                    name
+                  }
+                  ward {
+                    id
+                    name
+                  }
+                  roomType {
+                    id
+                    type
+                  }
+                  bedCpt
+                  status
+                  bedCode
+                  bedType {
+                    id
+                    label
+                  }
+                  bedName
+
+                }
+            }
+        }
+
+  mutation DeleteRoom($id: Int!) {
+            roomMutation {
+                delete(pk: $id) {
+                    success
+                }
+            }
+        }
+
+
+
+

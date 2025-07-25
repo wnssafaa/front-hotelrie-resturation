@@ -1,0 +1,46 @@
+
+
+      <div class="table">
+        <mat-form-field appearance="outline" class="search">
+          <mat-label>Recherche</mat-label>
+          <input matInput placeholder="RechercheRecherche" [(ngModel)]="searchTerm" (keyup)="searchRecettes(searchTerm)">
+        </mat-form-field>
+        <button mat-raised-button [routerLink]="['/resturation/recipe']" color="primary" style="margin-left: 20%">+{{ 'ajouter' | translate }}</button>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" *ngIf="dataSource && dataSource.data.length > 0" >
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let recette" [ngClass]="{'canceled': recette.isCanceled}">{{ recette.id }}</td>
+          </ng-container>
+          <ng-container matColumnDef="nom">
+            <th mat-header-cell *matHeaderCellDef>NOM</th>
+            <td mat-cell *matCellDef="let recette" [ngClass]="{'canceled': recette.isCanceled}">{{ recette.name }}</td>
+          </ng-container>
+          <ng-container matColumnDef="categorie">
+            <th mat-header-cell *matHeaderCellDef>CATEGORIE</th>
+            <td mat-cell *matCellDef="let recette" [ngClass]="{'canceled': recette.isCanceled}">{{ recette.Category }}</td>
+          </ng-container>
+          <ng-container matColumnDef="valeurProduction">
+            <th mat-header-cell *matHeaderCellDef>Valeur De Production </th>
+            <td mat-cell *matCellDef="let recette" [ngClass]="{'canceled': recette.isCanceled}" >{{ recette.ProductionValue }}</td>
+          </ng-container>
+          <ng-container matColumnDef="uniteProduction">
+            <th mat-header-cell *matHeaderCellDef>Unité De Production</th>
+            <td mat-cell *matCellDef="let recette" [ngClass]="{'canceled': recette.isCanceled}">{{ recette.uniteProductionValue }}</td>
+          </ng-container>
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Action</th>
+            <td mat-cell *matCellDef="let recette"><button  mat-icon-button  color="warn" (click)="deleteRecette(recette.id)">
+              <mat-icon>delete</mat-icon>
+              </button>
+              <button mat-icon-button color="primary" (click)="editRecette(recette)"><mat-icon>edit</mat-icon></button>
+              <button mat-icon-button  (click)="cancelrecette(recette)"><mat-icon>cancel</mat-icon></button>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <div *ngIf="!dataSource || dataSource.data.length === 0">
+          Aucune recette disponible.
+        </div>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+      </div>

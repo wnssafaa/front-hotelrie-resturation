@@ -1,0 +1,41 @@
+
+    <h1 *ngIf="!modificationReussi">
+      {{'ingredient.form.label.addIngredient'| translate}}
+    </h1>
+    <h1 *ngIf="modificationReussi">
+      {{'ingredient.form.label.updateingredient'| translate}}
+    </h1>
+    <div class="formulaire">
+
+    <form [formGroup]="ingredientForm" (ngSubmit)="addOrUpdateIngredient()" >
+
+      <mat-form-field appearance="outline">
+        <mat-label>  {{'ingredient.form.placeholder.name'|translate }}</mat-label>
+        <input matInput [placeholder]="'ingredient.form.placeholder.name'| translate" formControlName="name" class="mat-input-element">
+      </mat-form-field><br>
+
+      <mat-form-field appearance="outline">
+        <mat-label> {{'ingredient.form.placeholder.defaultUnit'|translate }}</mat-label>
+        <input matInput  [placeholder]="'ingredient.form.placeholder.defaultUnit'|translate " formControlName="unitPrice" class="mat-input-element">
+      </mat-form-field><br>
+
+      <mat-form-field appearance="outline">
+        <mat-label> {{'ingredient.form.placeholder.unitPrice' |translate }}</mat-label>
+        <input matInput type="number"  [placeholder]="'ingredient.form.placeholder.unitPrice' | translate" formControlName="price" class="mat-input-element">
+      </mat-form-field><br>
+
+      <mat-form-field appearance="outline">
+        <mat-label>  {{'ingredient.form.label.supplier'|translate }}</mat-label>
+        <input matInput formControlName="supplier" [placeholder]="'ingredient.form.label.supplier' | translate">
+      </mat-form-field><br>
+      <button type="submit" mat-raised-button  color="warn" style=" color: white; width: 15%; margin-left: 7% " [routerLink]="['/resturation/ingredient-list']">
+       {{'ingredient.form.button.cancel'|translate }}
+        </button>
+      <button type="submit" mat-raised-button color="primary"
+
+              style="color: white; width: 15%;margin-left: 5%" [disabled]="!isFormValid()">
+        {{modificationReussi ? ('UPDATE'| translate) : 'SAVE' | translate}}
+       </button>
+
+    </form>
+    </div>

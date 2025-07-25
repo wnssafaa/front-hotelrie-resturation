@@ -1,0 +1,110 @@
+type Ingredient {
+  id: ID!
+  name: String!
+  price: Int!
+  unitPrice: String!
+  supplier: String!
+  isCanceled:Boolean!
+}
+
+type Query {
+  ingredientList: [Ingredient!]!
+  ingredient(pk: ID!): Ingredient
+}
+
+type Mutation {
+  ingredientMutation: IngredientMutation
+
+}
+
+type IngredientMutation {
+  save(data: IngredientInput!): Ingredient
+  delete(pk: Int!): DeleteResponse
+}
+
+input IngredientInput {
+  id: Int
+  name: String!
+  price: Int!
+  unitPrice: String!
+  supplier: String!
+  isCanceled:Boolean!
+}
+
+type DeleteResponse {
+  success: Boolean!
+}
+
+
+
+query ingredientList {
+  ingredientList {
+    id
+    name
+    price
+    unitPrice
+    supplier
+    isCanceled
+  }
+}
+
+mutation CreateIngredient($name: String!, $price: Int!, $unitPrice: String!, $supplier: String! ,$isCanceled: Boolean) {
+  ingredientMutation {
+    save(data: {
+      name: $name,
+      price: $price,
+      unitPrice: $unitPrice,
+      supplier: $supplier
+      isCanceled: $isCanceled
+    }) {
+      id
+      name
+      price
+      unitPrice
+      supplier
+      isCanceled
+    }
+  }
+}
+
+mutation UpdateIngredient($id: Int!, $name: String!, $price: Int!, $unitPrice: String!, $supplier: String!,$isCanceled: Boolean) {
+  ingredientMutation {
+    save(data: {
+      id: $id,
+      name: $name,
+      price: $price,
+      unitPrice: $unitPrice,
+      supplier: $supplier,
+      isCanceled: $isCanceled
+    }) {
+      id
+      name
+      price
+      unitPrice
+      supplier
+      isCanceled
+    }
+  }
+}
+
+
+mutation DeleteIngredient($id: Int!) {
+  ingredientMutation {
+    delete(pk: $id) {
+      success
+    }
+  }
+}
+
+
+
+query GetIngredientById($id: ID!) {
+  ingredient(pk: $id) {
+    id
+    name
+    price
+    unitPrice
+    supplier
+    isCanceled
+  }
+}

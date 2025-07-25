@@ -1,0 +1,92 @@
+<div class="container">
+        <form [formGroup]="repasForm" (ngSubmit)="addOrUpdaterMeal()" class="repas">
+          <h1 *ngIf="!modificationReussi">{{ 'ADD_NEW_MEAL' | translate }}</h1>
+          <div style="display: flex; margin: auto">
+      <span class="image-container" *ngIf="file || repasForm.get('photo')?.value; else placeholder"
+            [ngClass]="{'box-shadow-avatar': !!file || repasForm.get('photo')?.value}">
+        <img *ngIf="repasForm.get('photo')?.value" [src]="repasForm.get('photo')?.value" />
+        <label for="avatar">
+          <input type="file" id="avatar" accept="image/*" (change)="onFileChange($event)" style="display: none;" />
+          <mat-icon class="upload" fontIcon="upload"></mat-icon>
+        </label>
+      </span>
+            <ng-template #placeholder>
+              <div class="image-container avatar-placeholder">
+                <label for="avatar-input-file">
+                  <input type="file" id="avatar-input-file" accept="image/*" (change)="onFileChange($event)" style="display: none;" />
+                  <mat-icon class="upload" fontIcon="upload"></mat-icon>
+                </label>
+              </div>
+            </ng-template>
+
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'MEAL_TYPE' | translate }}</mat-label>
+              <input matInput formControlName="type" placeholder="Type de repas">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>{{ 'LABEL' | translate }}</mat-label>
+              <input matInput formControlName="label" placeholder="Libellé">
+            </mat-form-field>
+          </div>
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'PRICE' | translate }}</mat-label>
+            <input matInput type="number" formControlName="price">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'CALORIES' | translate }}</mat-label>
+            <input matInput type="number" formControlName="calorie">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'belief' | translate }}</mat-label>
+            <mat-select formControlName="belief" >
+              <mat-option value="MUSLMANT">MUSLMANT</mat-option>
+              <mat-option value="bouddhiste">bouddhiste</mat-option>
+              <mat-option value="l-tal">l-tal</mat-option>
+              <mat-option value="hindou">hindou</mat-option>
+              <mat-option value="kascher">kascher</mat-option>
+              <mat-option value="édénique">édénique</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'AVAILABILITY' | translate }}</mat-label>
+            <mat-select formControlName="availability">
+              <mat-option value="UNAVAILABLE">{{ 'UNAVAILABLE' | translate }}</mat-option>
+              <mat-option value="AVAILABLE">{{ 'AVAILABLE' | translate }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'DIET' | translate }}</mat-label>
+            <mat-select formControlName="dietId">
+              <mat-option *ngFor="let regime of regimesList" [value]="regime.id">{{ regime.code }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>{{ 'SUPPLEMENT' | translate }}</mat-label>
+            <input matInput formControlName="supplement">
+          </mat-form-field><br>
+          <button mat-raised-button color="warn"  [routerLink]="['/resturation/meal-list']" style=" color: white; width: 15%; margin-left: 7% ">{{ 'CANCEL' | translate }}</button>
+          <button type="submit" mat-raised-button color="primary"
+                  style="color: white; width: 15%;margin-left: 5%" [disabled]="!isFormValid()">
+          {{modificationReussi ? ('UPDATE'| translate) : 'SAVE' | translate}}
+          </button>
+        </form>
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,175 @@
+
+type Diet {
+  id: ID!
+  code: String
+
+}
+
+type Meal {
+  id: ID!
+  type: String!
+  label: String!
+  price: Float
+  calorie: Int
+  availability: String
+  diet: Diet
+  supplement: String
+  belief: String
+  isCanceled: Boolean!
+  photo: String
+}
+
+type Query {
+  mealList: [Meal!]!
+  meal(pk: ID!): Meal
+}
+
+type Mutation {
+  mealMutation: MealMutation
+}
+
+type MealMutation {
+  save(data: MealInput!): Meal
+  delete(pk: Int!): DeleteResponse
+}
+
+input MealInput {
+  id: Int!
+  type: String!
+  label: String!
+  price: Float
+  calorie: Int
+  availability: String
+  diet: DietPartialInput
+  supplement: String
+  belief: String
+  photo: String
+  isCanceled: Boolean!
+}
+
+input DietPartialInput {
+  id: Int
+  code: String
+
+}
+
+type DeleteResponse {
+  success: Boolean!
+}
+
+
+query mealList {
+  mealList {
+    id
+    type
+    label
+    price
+    calorie
+    availability
+    diet {
+      code
+    }
+    supplement
+    belief
+    isCanceled
+  }
+}
+
+query GetMealById($id: ID!) {
+meal(pk: $id) {
+id
+type
+label
+price
+calorie
+availability
+diet {
+  id
+code
+}
+supplement
+belief
+isCanceled
+photo
+}
+}
+
+
+
+
+
+mutation CreateMeal($type: String!, $label: String!, $price: Float, $calorie: Int, $availability: String, $dietId: DietPartialInput, $supplement: String, $belief: String!, $photo: String,$isCanceled:Boolean!) {
+  mealMutation {
+    save(data: {
+      type: $type,
+      label: $label,
+      price: $price,
+      calorie: $calorie,
+      availability: $availability,
+      diet: $dietId,
+      supplement: $supplement,
+      belief: $belief,
+      photo: $photo,
+      isCanceled: $isCanceled
+    }) {
+      id
+      type
+      label
+      price
+      calorie
+      availability
+      diet {
+        id
+        code
+      }
+      supplement
+      belief
+      isCanceled
+      photo
+    }
+  }
+}
+
+
+
+mutation DeleteMeal($id: Int!) {
+  mealMutation {
+    delete(pk: $id) {
+      success
+    }
+  }
+}
+mutation UpdateMeal($id: Int!, $type: String!, $label: String!, $price: Float, $calorie: Int, $availability: String, $dietId: DietPartialInput, $supplement: String, $belief: String!, $photo: String,$isCanceled:Boolean!) {
+  mealMutation {
+    save(data: {
+      id: $id,
+      type: $type,
+      label: $label,
+      price: $price,
+      calorie: $calorie,
+      availability: $availability,
+      diet: $dietId,
+      supplement: $supplement,
+      belief: $belief,
+      photo: $photo,
+      isCanceled: $isCanceled
+    }) {
+      id
+      type
+      label
+      price
+      calorie
+      availability
+      diet {
+        id
+        code
+
+      }
+      supplement
+      belief
+      isCanceled
+      photo
+    }
+  }
+}
+
